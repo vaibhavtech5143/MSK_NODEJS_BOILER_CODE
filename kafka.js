@@ -4,11 +4,16 @@ const { generateAuthToken } = require("aws-msk-iam-sasl-signer-js");
 // AWS Region for IAM token generation
 const AWS_REGION = "ap-south-1";
 
-// MSK Cluster Bootstrap Servers (Public endpoints with IAM authentication)
+// MSK Cluster Bootstrap Servers (Private VPC endpoints with IAM authentication)
+// Use these if your EC2 is in the same VPC as MSK cluster
 const BROKERS = [
-  "b-1-public.devmskclusterns.rtzs78.c2.kafka.ap-south-1.amazonaws.com:9198",
-  "b-2-public.devmskclusterns.rtzs78.c2.kafka.ap-south-1.amazonaws.com:9198"
+  "b-1.devmskclusterns.rtzs78.c2.kafka.ap-south-1.amazonaws.com:9098",
+  "b-2.devmskclusterns.rtzs78.c2.kafka.ap-south-1.amazonaws.com:9098"
 ];
+
+// If connecting from outside AWS or different VPC, use public endpoints:
+// "b-1-public.devmskclusterns.rtzs78.c2.kafka.ap-south-1.amazonaws.com:9198"
+// "b-2-public.devmskclusterns.rtzs78.c2.kafka.ap-south-1.amazonaws.com:9198"
 
 // IAM OAuth Bearer Token Provider
 async function oauthBearerTokenProvider(region) {
